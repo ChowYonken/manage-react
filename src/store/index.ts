@@ -12,7 +12,7 @@ const persistConfig = {
 
 const store = configureStore({
   reducer: {
-    user: persistReducer(persistConfig, userSlice),
+    user: persistReducer<ReturnType<typeof userSlice>>(persistConfig, userSlice),
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
@@ -30,3 +30,13 @@ export type AppDispatch = typeof store.dispatch
 // 在整个应用程序中使用，而不是简单的 `useDispatch` 和 `useSelector`
 export const useAppDispatch: () => AppDispatch = useDispatch
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
+
+// 添加一个等待持久化完成的函数
+export function getPersistedState(): Promise<RootState> {
+  return new Promise(resolve => {
+    const unsubscribe = store.subscribe(() => {
+      unsubscribe()
+      resolve(store.getState())
+    })
+  })
+}

@@ -36,6 +36,8 @@ const login = memo(() => {
       const redirect = searchParams.get('redirect')
       dispatch(setUserInfo(userInfo?.data))
       navigate(redirect || '/', { replace: true })
+      // 清除重定向缓存
+      storage.remove('redirect')
     } catch (error) {
       run()
     }
@@ -51,8 +53,12 @@ const login = memo(() => {
   }, [data, run])
 
   useEffect(() => {
+    const redirect = storage.get('redirect')
     run()
-  }, [run])
+    if (redirect) {
+      navigate(`/login?redirect=${redirect}`)
+    }
+  }, [run, navigate])
 
   useEffect(() => {
     // 登录后访问登录页面，自动跳转到登录前页面

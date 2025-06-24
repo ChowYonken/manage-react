@@ -1,0 +1,26 @@
+.logoStyle {
+  height: 56px;
+  font-weight: 700;
+  font-size: 18px;
+  background-color: @MenuBackground;
+  color: @MenuColor;
+}
+
+.menuStyle {
+  width: 200px;
+  height: calc(100% - 56px);
+  background-color: @MenuBackground;
+  overflow-y: auto;
+}
+
+:global(.ant-menu-title-content) {
+  color: @MenuColor;
+}
+
+:global(.ant-menu.ant-menu-light .ant-menu-item.ant-menu-item-selected) {
+  background-color: @MenuHoverBackground;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

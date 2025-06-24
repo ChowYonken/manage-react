@@ -2,9 +2,7 @@ import axios from 'axios'
 import { showLoading, hideLoading } from './Loading'
 import { message } from 'antd'
 import storage from '@/utils/storage'
-import { useAppDispatch } from '@/store'
-import { resetState } from '@/store/modules/userSlice'
-import { useSearchParams } from 'react-router-dom'
+import {getPathAfterDomain} from '@/utils/index'
 
 const request = axios.create({
   baseURL: '/api',
@@ -13,14 +11,14 @@ const request = axios.create({
 
 request.interceptors.request.use(
   config => {
-    showLoading()
+    // showLoading()
     if (storage.get('token')) {
       config.headers['token'] = storage.get('token')
     }
     return config
   },
   err => {
-    hideLoading()
+    // hideLoading()
     console.log(err)
     return Promise.reject(err)
   }
@@ -28,7 +26,7 @@ request.interceptors.request.use(
 
 request.interceptors.response.use(
   response => {
-    hideLoading()
+    // hideLoading()
     const { code, msg } = response.data
     if (code === 0 || code === 200) {
       return response.data
@@ -38,24 +36,31 @@ request.interceptors.response.use(
       return response
     }
 
+    if (code === 9001) {
+      storage.clear()
+      window.location.href = `/login?redirect=${getPathAfterDomain(window.location.href)}`
+      message.error(msg + '请重新登录')
+      return
+    }
+
     message.error(msg || '系统出错')
     return Promise.reject(new Error(msg || 'Error'))
   },
   error => {
-    hideLoading()
+    // hideLoading()
     console.log('err' + error) // for debug
     if (error.response.data && error.response.status) {
       switch (error.response.status) {
         // 401: 未登录
         case 401:
           storage.clear()
-          window.location.href = `/login?redirect=${window.location.href}`
+          window.location.href = `/login?redirect=${getPathAfterDomain(window.location.href)}`
           location.reload()
           break
         // 403 token过期
         case 403:
           storage.clear()
-          window.location.href = `/login?redirect=${window.location.href}`
+          window.location.href = `/login?redirect=${getPathAfterDomain(window.location.href)}`
           location.reload()
           break
         // 404请求不存在

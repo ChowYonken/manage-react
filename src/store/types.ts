@@ -8,6 +8,7 @@ export interface UserInfo {
   email: string
   menus: IMenu[]
   apiList: string[]
+  flattenRoutes?: IMenu[]
 }
 
 export interface userState {

@@ -1,6 +1,6 @@
 import Router from '@/router/index'
-import { BrowserRouter, RouterProvider } from 'react-router-dom'
-import { memo } from 'react'
+import { BrowserRouter, RouterProvider, useLocation } from 'react-router-dom'
+import { memo, useEffect } from 'react'
 import style from './App.module.less'
 
 const App = memo(() => {

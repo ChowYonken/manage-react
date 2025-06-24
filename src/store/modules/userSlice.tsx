@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { userState, UserInfo } from '../types'
 import { RootState, AppDispatch } from '../index'
+import { flattenRoutes, filterMenuModule } from '@/utils/index'
 
 const createAppAsyncThunk = createAsyncThunk.withTypes<{
   state: RootState
@@ -19,7 +20,11 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUserInfo: (state, action) => {
-      state.userInfo = action.payload
+      state.userInfo = {
+        ...action.payload,
+        flattenRoutes: flattenRoutes(action.payload.menus),
+        menus: filterMenuModule(action.payload.menus),
+      }
     },
     setToken: (state, action) => {
       state.token = action.payload

@@ -18,11 +18,14 @@ const NavBar = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const handleMenuClick: MenuProps['onClick'] = e => {
-    console.log('click', e)
     if (e.key === 'logout') {
       storage.clear()
       dispatch(resetState())
-      navigate(`/login?redirect=${location.pathname}`)
+      navigate(`/login?redirect=${location.pathname}`, {
+        replace: true,
+      })
+      // 保存重定向的路径
+      storage.set('redirect', location.pathname)
     }
   }
 

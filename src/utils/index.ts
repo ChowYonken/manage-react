@@ -65,3 +65,41 @@ export const parseTime = (
   })
   return time_str
 }
+
+// 获取域名后的路径
+export function getPathAfterDomain(url: string): string | null {
+  try {
+    const urlObj = new URL(url)
+    return urlObj.pathname
+  } catch (error) {
+    console.error('Invalid URL:', error)
+    return null
+  }
+}
+
+import { IMenu } from '@/store/types'
+// 嵌套路由扁平化
+export function flattenRoutes(routes: IMenu[]): IMenu[] {
+  return routes.reduce((acc, route) => {
+    if (route.children) {
+      return [...acc, route, ...flattenRoutes(route.children)]
+    }
+    return [...acc, route]
+  }, [] as IMenu[])
+}
+
+// 过滤菜单模块
+export function filterMenuModule(menu: IMenu[]): IMenu[] {
+  // 过滤第一层级即可
+  return menu.filter(item => {
+    return item.module === import.meta.env.VITE_APP_BASE_SYS_NAME
+  })
+}
+
+// 去除基础路径前缀
+export function removePrefix(path: string, prefix: string) {
+  const normalizedPrefix = prefix.startsWith('/') ? prefix : `/${prefix}`
+  return path.startsWith(normalizedPrefix)
+    ? '/' + path.slice(normalizedPrefix.length).split('/').filter(Boolean).join('/')
+    : path
+}
