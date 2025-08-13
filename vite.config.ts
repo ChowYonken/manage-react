@@ -15,10 +15,14 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       host: 'localhost',
-      port: 2457,
+      port: Number(env.VITE_APP_PORT),
       proxy: {
-        '/api': {
-          target: 'http://61.145.163.252:6148',
+        [env.VITE_BASE_API]: {
+          target: env.VITE_BASE_URL,
+          changeOrigin: true,
+          pathRewrite: {
+            ['^' + process.env.VUE_APP_BASE_API]: process.env.VUE_APP_BASE_API,
+          },
         },
       },
     },

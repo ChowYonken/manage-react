@@ -1,6 +1,7 @@
 import React from 'react'
 import { useAppSelector } from '@/store'
-import NotAuth from './NotAuth'
+import NotAuth from '@/views/NotAuth'
+import storage from '@/utils/storage'
 
 interface AuthProps {
   menuCode: string
@@ -8,7 +9,9 @@ interface AuthProps {
 }
 // 权限守卫组件
 const Auth: React.FC<AuthProps> = ({ children, menuCode }) => {
+  const token = storage.get('token')
   const { flattenRoutes } = useAppSelector(state => state.user.userInfo)
+  if (!token) return null
   if (flattenRoutes?.some(item => item.menuCode === menuCode)) return children
   return <NotAuth />
 }

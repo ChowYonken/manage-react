@@ -1,25 +1,7 @@
 import { memo } from 'react'
 
 const Dashboard = memo(() => {
-  return (
-    <div className='login-form'>
-      <div style={{ lineHeight: '100px' }}>Dashboard</div>
-      <div style={{ lineHeight: '100px' }}>Dashboard</div>
-      <div style={{ lineHeight: '100px' }}>Dashboard</div>
-      <div style={{ lineHeight: '100px' }}>Dashboard</div>
-      <div style={{ lineHeight: '100px' }}>Dashboard</div>
-      <div style={{ lineHeight: '100px' }}>Dashboard</div>
-      <div style={{ lineHeight: '100px' }}>Dashboard</div>
-      <div style={{ lineHeight: '100px' }}>Dashboard</div>
-      <div style={{ lineHeight: '100px' }}>Dashboard</div>
-      <div style={{ lineHeight: '100px' }}>Dashboard</div>
-      <div style={{ lineHeight: '100px' }}>Dashboard</div>
-      <div style={{ lineHeight: '100px' }}>Dashboard</div>
-      <div style={{ lineHeight: '100px' }}>Dashboard</div>
-      <div style={{ lineHeight: '100px' }}>Dashboard</div>
-      <div style={{ lineHeight: '100px' }}>Dashboard</div>
-    </div>
-  )
+  return <div className='login-form'>Dashboard</div>
 })
 
 export default Dashboard

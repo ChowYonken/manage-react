@@ -3,7 +3,7 @@ import { Menu, Flex, Divider } from 'antd'
 import style from './index.module.less'
 import { useAppSelector } from '@/store'
 import { useCallback, useMemo } from 'react'
-import { IMenu } from '@/store/types'
+import { IMenu } from '@/interfaces/common'
 import { removePrefix } from '@/utils'
 import { useNavigate } from 'react-router-dom'
 

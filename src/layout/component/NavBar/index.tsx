@@ -1,4 +1,4 @@
-import style from '../index.module.less'
+import style from '../../index.module.less'
 import { Dropdown, Avatar, Flex, Breadcrumb } from 'antd'
 import type { MenuProps } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
@@ -19,13 +19,12 @@ const NavBar = () => {
   const location = useLocation()
   const handleMenuClick: MenuProps['onClick'] = e => {
     if (e.key === 'logout') {
-      storage.clear()
       dispatch(resetState())
+      // 保存重定向的路径
+      storage.set('redirect', location.pathname)
       navigate(`/login?redirect=${location.pathname}`, {
         replace: true,
       })
-      // 保存重定向的路径
-      storage.set('redirect', location.pathname)
     }
   }
 

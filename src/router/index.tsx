@@ -1,11 +1,12 @@
-import { createBrowserRouter, Navigate, useRoutes, Routes } from 'react-router-dom'
+import { createBrowserRouter, Navigate, useRoutes, Routes, Link } from 'react-router-dom'
 import React, { memo } from 'react'
 import LayoutGlobal from '@/layout'
 import AuthLoader from './AuthLoader'
-import Auth from '@/views/Auth'
+import Auth from '@/components/Auth'
 import Login from '@/views/Login'
 import NotFound from '@/views/NotFound'
 import NotAuth from '@/views/NotAuth'
+
 const Dashboard = React.lazy(() => import('@/views/Dashboard'))
 const WebMenu = React.lazy(() => import('@/views/system/menu/webMenu/index'))
 const AppMenu = React.lazy(() => import('@/views/system/menu/appMenu/index'))
@@ -30,11 +31,19 @@ const router = [
       },
       {
         path: 'homePageItem',
+        loader: () => {
+          return {
+            title: '首页',
+          }
+        },
         element: (
           <Auth menuCode='homePageItem'>
             <Dashboard />
           </Auth>
         ),
+        handle: () => {
+          return () => <Link to='/messages'>Messages</Link>
+        },
       },
       {
         path: 'organization',

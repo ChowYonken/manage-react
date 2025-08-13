@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 import { useRequest } from 'ahooks'
 import type { ResponseType } from '@/interfaces/base'
-import type { CodeResult, LoginSubmitParams } from '@/interfaces/request/login'
-import type { UserInfo } from '@/store/types'
+import type { CodeResult, LoginSubmitParams } from './types'
+import type { UserInfo } from '@/interfaces/common'
 
 export const useGetVertifyCode = () => {
   const { data, error, loading, run } = useRequest(

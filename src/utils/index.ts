@@ -77,7 +77,7 @@ export function getPathAfterDomain(url: string): string | null {
   }
 }
 
-import { IMenu } from '@/store/types'
+import { IMenu } from '@/interfaces/common'
 // 嵌套路由扁平化
 export function flattenRoutes(routes: IMenu[]): IMenu[] {
   return routes.reduce((acc, route) => {

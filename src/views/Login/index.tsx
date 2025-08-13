@@ -2,12 +2,13 @@ import { memo, useEffect, useMemo } from 'react'
 import { Form, Input, Button } from 'antd'
 import type { FormProps } from 'antd'
 import LoginWrapper from './style'
-import { useGetVertifyCode, useLoginSubmit, useGetUserInfo } from '@/hook/request/login-apis'
-import type { LoginSubmitParams } from '@/interfaces/request/login'
+import { useGetVertifyCode, useLoginSubmit, useGetUserInfo } from '@/api/common'
+import type { LoginSubmitParams } from '@/api/common/types'
 import { useAppDispatch } from '@/store'
 import { setToken, setUserInfo } from '@/store/modules/userSlice'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import storage from '@/utils/storage'
+import useNProgress from '@/hooks/useNProgress'
 
 interface FieldType {
   userName: string
@@ -22,6 +23,7 @@ const login = memo(() => {
   const dispatch = useAppDispatch()
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
+  useNProgress()
   const onFinish: FormProps<FieldType>['onFinish'] = async values => {
     const params: LoginSubmitParams = {
       ...values,

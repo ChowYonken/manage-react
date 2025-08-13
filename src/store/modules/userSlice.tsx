@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { userState, UserInfo } from '../types'
+import { userState, UserInfo } from '@/interfaces/common'
 import { RootState, AppDispatch } from '../index'
 import { flattenRoutes, filterMenuModule } from '@/utils/index'
+import storage from '@/utils/storage'
 
 const createAppAsyncThunk = createAsyncThunk.withTypes<{
   state: RootState
@@ -32,6 +33,7 @@ export const userSlice = createSlice({
     resetState: state => {
       state.token = ''
       state.userInfo = {} as UserInfo
+      storage.clear()
     },
   },
 })

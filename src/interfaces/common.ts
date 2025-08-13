@@ -1,3 +1,5 @@
+import { MenuHideEnum, MenuLinkType } from '@/enum/common'
+
 export interface UserInfo {
   userId: string
   orgId: string
@@ -27,18 +29,4 @@ export interface IMenu {
   menuName: string
   menuUrl: string
   module: string
-}
-
-export enum MenuHideEnum {
-  // 显示
-  SHOW = 0,
-  // 隐藏
-  HIDE = 1,
-}
-
-export enum MenuLinkType {
-  // 内部
-  INNER = 0,
-  // 外部
-  OUTER = 1,
 }

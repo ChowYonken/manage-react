@@ -1,4 +1,4 @@
-import style from '../index.module.less'
+import style from '../../index.module.less'
 import { Tabs } from 'antd'
 import type { TabsProps } from 'antd'
 
