@@ -10,12 +10,13 @@ import Loading from '@/views/Loading'
 import { Watermark } from 'antd'
 import storage from '@/utils/storage'
 import useNProgress from '@/hooks/useNProgress'
+import { useActiveRouter } from './index'
 
 const LayoutGlobal = () => {
   const token = storage.get('token')
   const navigate = useNavigate()
   useNProgress()
-
+  const { activeParentKey, activeKey } = useActiveRouter()
   useEffect(() => {
     const redirect = storage.get('redirect')
     if (!token) {
@@ -28,7 +29,7 @@ const LayoutGlobal = () => {
   return (
     <Layout className={style.layoutStyle}>
       <Sider className={style.siderStyle}>
-        <SideBar />
+        <SideBar activeParentKey={activeParentKey} activeKey={activeKey} />
       </Sider>
       <Layout>
         <Header className={style.headerStyle}>

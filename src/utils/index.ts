@@ -103,3 +103,9 @@ export function removePrefix(path: string, prefix: string) {
     ? '/' + path.slice(normalizedPrefix.length).split('/').filter(Boolean).join('/')
     : path
 }
+
+// 处理第三层级菜单
+export function handleThreeMenu(menu: string, parentMenuName: string) {
+  const result = menu.replace(new RegExp(`^/${import.meta.env.VITE_APP_BASE_SYS_NAME}`), '')
+  return `/${import.meta.env.VITE_APP_BASE_SYS_NAME}/${parentMenuName}${result}`
+}

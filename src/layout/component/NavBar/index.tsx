@@ -1,11 +1,13 @@
 import style from '../../index.module.less'
-import { Dropdown, Avatar, Flex, Breadcrumb } from 'antd'
+import { Dropdown, Avatar, Flex } from 'antd'
 import type { MenuProps } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
 import storage from '@/utils/storage'
 import { useAppDispatch } from '@/store'
 import { resetState } from '@/store/modules/userSlice'
 import { useNavigate, useLocation } from 'react-router-dom'
+import Breadcrumb from '../BreadCrumb'
+import { memo } from 'react'
 
 const items: MenuProps['items'] = [
   {
@@ -13,7 +15,7 @@ const items: MenuProps['items'] = [
     label: <div>退出登录</div>,
   },
 ]
-const NavBar = () => {
+const NavBar = memo(() => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const location = useLocation()
@@ -31,22 +33,13 @@ const NavBar = () => {
   return (
     <div className={style.navHeader}>
       <Flex align='center' justify='space-between' style={{ height: '100%', width: '100%' }}>
-        <Breadcrumb
-          items={[
-            {
-              title: 'Home',
-            },
-            {
-              title: 'An Application',
-            },
-          ]}
-        />
+        <Breadcrumb />
         <Dropdown menu={{ items, onClick: handleMenuClick }}>
           <Avatar icon={<UserOutlined />} />
         </Dropdown>
       </Flex>
     </div>
   )
-}
+})
 
 export default NavBar

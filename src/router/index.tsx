@@ -1,16 +1,19 @@
 import { createBrowserRouter, Navigate, useRoutes, Routes, Link } from 'react-router-dom'
 import React, { memo } from 'react'
-import LayoutGlobal from '@/layout'
+import LayoutGlobal from '@/layout/index.tsx'
 import AuthLoader from './AuthLoader'
 import Auth from '@/components/Auth'
 import Login from '@/views/Login'
 import NotFound from '@/views/NotFound'
 import NotAuth from '@/views/NotAuth'
+import { IBreadcrumbItem } from '@/interfaces/router'
 
 const Dashboard = React.lazy(() => import('@/views/Dashboard'))
 const WebMenu = React.lazy(() => import('@/views/system/menu/webMenu/index'))
 const AppMenu = React.lazy(() => import('@/views/system/menu/appMenu/index'))
 const Personal = React.lazy(() => import('@/views/organization/personal/index'))
+const JavaCpn = React.lazy(() => import('@/views/system/codegen/java'))
+const VueCpn = React.lazy(() => import('@/views/system/codegen/vue'))
 
 const router = [
   {
@@ -24,6 +27,15 @@ const router = [
     // },
     path: '/',
     element: <LayoutGlobal />, // 子路由
+    loader: () => {
+      return {
+        title: '首页',
+        menuCode: 'homePageItem',
+      }
+    },
+    handle: {
+      crumb: (data: IBreadcrumbItem) => <Link to='/homePageItem'>{data.title}</Link>,
+    },
     children: [
       {
         index: true, // 新增索引路由
@@ -31,27 +43,43 @@ const router = [
       },
       {
         path: 'homePageItem',
-        loader: () => {
-          return {
-            title: '首页',
-          }
-        },
         element: (
           <Auth menuCode='homePageItem'>
             <Dashboard />
           </Auth>
         ),
-        handle: () => {
-          return () => <Link to='/messages'>Messages</Link>
+        loader: () => {
+          return {
+            title: 'Dashboard',
+            menuCode: 'homePageItem',
+          }
+        },
+        handle: {
+          crumb: (data: IBreadcrumbItem) => <span>{data.title}</span>,
         },
       },
       {
         path: 'organization',
+        loader: () => {
+          return {
+            title: '个人中心',
+            menuCode: 'userCode',
+          }
+        },
         children: [
           {
             path: 'personal',
+            loader: () => {
+              return {
+                title: '个人中心',
+                menuCode: 'PersonalStaging',
+              }
+            },
+            handle: {
+              crumb: (data: IBreadcrumbItem) => <span>{data.title}</span>,
+            },
             element: (
-              <Auth menuCode='homePageItem'>
+              <Auth menuCode='PersonalStaging'>
                 <Personal />
               </Auth>
             ),
@@ -59,23 +87,109 @@ const router = [
         ],
       },
       {
-        path: 'menu',
+        path: 'system',
+        loader: () => {
+          return {
+            title: '系统管理',
+            menuCode: 'system',
+          }
+        },
         children: [
           {
-            path: 'web',
-            element: (
-              <Auth menuCode='SystemMenuWeb'>
-                <WebMenu />
-              </Auth>
-            ),
+            path: 'codegen',
+            loader: () => {
+              return {
+                title: '代码工具',
+                menuCode: 'codeGenerator',
+              }
+            },
+            handle: {
+              crumb: (data: IBreadcrumbItem) => <span>{data.title}</span>,
+            },
+            children: [
+              {
+                path: 'java',
+                loader: () => {
+                  return {
+                    title: 'Java代码生成',
+                    menuCode: 'GenJava',
+                  }
+                },
+                handle: {
+                  crumb: (data: IBreadcrumbItem) => <span>{data.title}</span>,
+                },
+                element: (
+                  <Auth menuCode='GenJava'>
+                    <JavaCpn />
+                  </Auth>
+                ),
+              },
+              {
+                path: 'vue',
+                loader: () => {
+                  return {
+                    title: 'Vue代码生成',
+                    menuCode: 'GenVue',
+                  }
+                },
+                handle: {
+                  crumb: (data: IBreadcrumbItem) => <span>{data.title}</span>,
+                },
+                element: (
+                  <Auth menuCode='GenVue'>
+                    <VueCpn />
+                  </Auth>
+                ),
+              },
+            ],
           },
           {
-            path: 'app',
-            element: (
-              <Auth menuCode='SystemMenuApp'>
-                <AppMenu />
-              </Auth>
-            ),
+            path: 'menu',
+            loader: () => {
+              return {
+                title: '菜单管理',
+                menuCode: 'menu1',
+              }
+            },
+            handle: {
+              crumb: (data: IBreadcrumbItem) => <span>{data.title}</span>,
+            },
+            children: [
+              {
+                path: 'web',
+                loader: () => {
+                  return {
+                    title: 'web菜单',
+                    menuCode: 'SystemMenuWeb',
+                  }
+                },
+                handle: {
+                  crumb: (data: IBreadcrumbItem) => <span>{data.title}</span>,
+                },
+                element: (
+                  <Auth menuCode='SystemMenuWeb'>
+                    <WebMenu />
+                  </Auth>
+                ),
+              },
+              {
+                path: 'app',
+                loader: () => {
+                  return {
+                    title: 'app菜单',
+                    menuCode: 'SystemMenuApp',
+                  }
+                },
+                handle: {
+                  crumb: (data: IBreadcrumbItem) => <span>{data.title}</span>,
+                },
+                element: (
+                  <Auth menuCode='SystemMenuApp'>
+                    <AppMenu />
+                  </Auth>
+                ),
+              },
+            ],
           },
         ],
       },

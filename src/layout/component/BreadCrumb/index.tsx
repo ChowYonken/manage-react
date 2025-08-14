@@ -1,28 +1,18 @@
 import { Breadcrumb as AntdBreadcrumb } from 'antd'
-import { useState, useEffect } from 'react'
-import { useLocation, useMatches } from 'react-router-dom'
+import { memo } from 'react'
+import { useMatches } from 'react-router-dom'
 
-const Breadcrumb = () => {
-  const location = useLocation()
+const Breadcrumb = memo(() => {
   const matches = useMatches()
-  const [breadcrumbItems, setBreadcrumbItems] = useState<IBreadcrumbItem[]>([])
-  useEffect(() => {
-    console.log(location, matches, '====location====')
-  }, [location, matches])
+  const crumbs = matches
+    ?.filter(match => Boolean((match.handle as any)?.crumb))
+    ?.map(match => ({ title: (match.handle as any).crumb(match.data) }))
+
   return (
     <>
-      <AntdBreadcrumb
-        items={[
-          {
-            title: 'Home',
-          },
-          {
-            title: 'An Application',
-          },
-        ]}
-      ></AntdBreadcrumb>
+      <AntdBreadcrumb items={crumbs}></AntdBreadcrumb>
     </>
   )
-}
+})
 
 export default Breadcrumb
