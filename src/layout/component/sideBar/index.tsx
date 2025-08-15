@@ -7,6 +7,7 @@ import { IMenu } from '@/interfaces/common'
 import { removePrefix, handleThreeMenu } from '@/utils'
 import { useNavigate, useLocation, useMatches } from 'react-router-dom'
 import { PATH_MAPPING } from '@/router/mapping'
+import { SvgIcon } from '@/components/SvgIcon'
 
 const SideBar = memo(
   ({ activeParentKey, activeKey }: { activeParentKey: string[]; activeKey: string }) => {
@@ -49,6 +50,7 @@ const SideBar = memo(
               linktype: item.linkType,
               children: formatterRoutes(item.children, level + 1, parentMenuCode),
               level,
+              icon: <SvgIcon iconName={item.icon} />,
             }
           }
 
@@ -64,6 +66,7 @@ const SideBar = memo(
               label: item.children[0].menuName,
               linktype: item.linkType,
               level,
+              icon: <SvgIcon iconName={item.icon} />,
             }
           }
 
@@ -72,6 +75,7 @@ const SideBar = memo(
             label: item.menuName,
             linktype: item.linkType,
             level,
+            icon: <SvgIcon iconName={item.icon} />,
           }
         })
       },
