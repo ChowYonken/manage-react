@@ -6,6 +6,7 @@ import theme from '@/assets/theme/index.ts'
 import store, { persistor } from './store'
 import { Provider } from 'react-redux'
 import '@/assets/css/index.less'
+import '@/assets/css/main.css'
 import { PersistGate } from 'redux-persist/integration/react'
 
 createRoot(document.getElementById('root')!).render(

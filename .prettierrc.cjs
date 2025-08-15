@@ -13,4 +13,6 @@ module.exports = {
   htmlWhitespaceSensitivity: 'ignore',
   vueIndentScriptAndStyle: true,
   endOfLine: 'lf',
+  // tailwindcss自动排序插件配置
+  plugins: ['prettier-plugin-tailwindcss'],
 }
